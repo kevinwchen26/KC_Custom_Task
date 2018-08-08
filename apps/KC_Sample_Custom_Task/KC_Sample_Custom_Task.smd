@@ -1,0 +1,42 @@
+{
+  "id" : "KC_Sample_Custom_Task",
+  "siteId" : "KC_Sample_Custom_Task",
+  "applicationId" : "KC_Sample_Custom_Task",
+  "siteAuth" : {
+    "authTypes" : [ {
+      "id" : "sso",
+      "scheme" : "SSO"
+    } ],
+    "defaultId" : "sso"
+  },
+  "dataProviders" : [ {
+    "key" : "getWorker",
+    "value" : "https://api.workday.com/common/v1/workers"
+  } ],
+  "tasks" :
+  [
+    {
+      "id" : "root",
+      "routingPattern" : "/",
+      "page" : {
+        "id" : "home"
+      }
+  },
+    {
+      "routingPattern": "entry",
+      "id": "entry",
+      "page": {
+        "descriptor": "Enter Expense Entry",
+        "id": "entry"
+    }
+    },
+    {
+      "routingPattern": "history",
+      "id": "history",
+      "page": {
+        "descriptor": "View Expense History",
+        "id": "entry"
+      }
+    }
+  ]
+}

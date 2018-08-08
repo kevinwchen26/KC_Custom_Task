@@ -1,0 +1,45 @@
+{
+    "id": "entry",
+    "endPoints": [
+    ],
+    "outboundData": {
+        "outboundEndPoints": [
+        ]
+    },
+    "presentation": {
+        "headerSize": "VPS_DEFAULT",
+        "body": {
+            "type": "section",
+            "horizontal": false,
+            "children": [
+
+                {
+                    "type": "fieldSet",
+                    "title": "Select Expense Type"
+
+                },
+                {
+                    "type": "button",
+                    "id": "home",
+                    "label": "Home",
+                    "taskReference":{
+                        "type": "taskReference",
+                        "taskId": "root"
+                    },
+                    "action": "LINK",
+                    "commandHttpMethod": "GET"
+                }
+            ]
+        },
+        "footer": {
+            "type": "footer",
+            "children": [
+                {
+                    "type": "richText",
+                    "enabled": "false",
+                    "value": "Powered By WCP"
+                }
+            ]
+        }
+    }
+}

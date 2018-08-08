@@ -1,0 +1,77 @@
+{
+    "id" : "home",
+    "endPoints" : [ {
+                        "name" : "workerData",
+                        "baseUrlType" : "getWorker",
+                        "url" : "/${queryParams.workerId}",
+                        "authType" : "sso"
+                    } ],
+    "presentation" : {
+        "headerSize" : "VPS_DEFAULT",
+        "body" : {
+            "type" : "section",
+            "horizontal" : false,
+            "sorted" : false,
+            "children" : [
+                {
+                    "type": "text",
+                    "label": "Warning!",
+                    "value": "Please run this task as a related action from a worker.",
+                    "render": "${empty queryParams.workerId}"
+                },
+                {
+                    "type": "section",
+                    "render": "${not empty queryParams.workerId}",
+                    "id": "bodySection",
+                    "children": [
+                        {
+                            "type": "section",
+                            "id": "ExpenseEntrySection",
+                            "title": "Enter Expenses",
+                            "children": [
+                                {
+                                    "type": "richText",
+                                    "id": "instructionText",
+                                    "value": "Click here to enter a new expense!  The button below routes to a page that does the following:  <ul><li>A GET API call against the workers resource, passing the id of the worker that the task is being performed on as the path parameter to get worker information for the expense entry.  This information is used to prepoulate the expense entry form.</li> <li>A GET API call against the country dataset from the <b>Reference Data Service</b> to get a set of drop down values for the country dropdown field.</li><li>A POST API call against the <b>expenses</b> resource to create a new expense entry for the worker.</li><li>A POST API call against the MyTE API to enter the expense into MyTE.</li></ul>"
+                                },
+                                {
+                                    "type": "button",
+                                    "id": "EntryButton",
+                                    "label": "Enter Expenses for ${workerData.descriptor}",
+                                    "_comment": "This isn't a pretty label; it's just to be clear that the ID is coming from the custom task",
+                                    "action": "PRIMARY",
+                                    "taskReference": {
+                                        "taskId": "entry",
+                                        "parameters": "${json:create(json:attribute('workerId', queryParams.workerId))}"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "section",
+                            "id": "ExpenseHistorySection",
+                            "title": "Order History",
+                            "children": [
+                                {
+                                    "type": "richText",
+                                    "id": "historyInstructionText",
+                                    "value": "Retrieve the most recent expense entries for the worker from Workday!  The button below routes to a page that does the following:  <ul><li>A GET API call against the expenses resource to get the most recent expenses for the current user by passing in the id from above as the value for the <b>requester</b> query string parameter.</li></ul><p>The results are presented using a GRID widget.</p>"
+                                },
+                                {
+                                    "type": "button",
+                                    "id": "ExpenseHistoryButton",
+                                    "label": "Expense History for ${workerData.descriptor}",
+                                    "action": "PRIMARY",
+                                    "taskReference": {
+                                        "taskId": "history",
+                                        "parameters": "${json:create(json:attribute('workerId', queryParams.workerId))}"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
